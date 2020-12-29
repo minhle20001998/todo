@@ -9,24 +9,40 @@ class TodoItem extends Component {
         };
         this.handleLabelClick = this.handleLabelClick.bind(this);
     }
-    handleLabelClick() {
-        console.log(this.state.toogle);
-        const { toogle } = this.state
+
+
+    handleLabelClick(e) {
+        const { toggle } = this.state;
+        this.props.onClick(e);
         this.setState({
-            toogle: !toogle,
-        })
+            toggle: !toggle
+        });
     }
+
     render() {
         console.log("render todoitem");
         const { className, id } = this.props;
-        if (this.props.children) {
-            return <div className={this.state.toggle ? " line" : "a  "}>
-                <Input className="todo-item" type="checkbox" id={id} />
-                <label htmlFor={id} onClick={this.handleLabelClick}>{this.props.children}</label>
-            </div>
-        } else {
-            return null
-        }
+
+        return (
+            <>
+                {
+                    this.props.children ? (<div className={this.state.toggle ? className + " item line" : className + " item"}>
+                        <Input className="todo-item" type="checkbox" id={id} />
+                        <label htmlFor={id} id={id} onClick={this.handleLabelClick}>{this.props.children}</label>
+                    </div>) : (null)
+                }
+            </>
+        )
+
+        // if (this.props.children) {
+        //     console.log("hien item")
+        //     return <div className={this.state.toggle ? " line" : "a  "}>
+        //         <Input className="todo-item" type="checkbox" id={id} />
+        //         <label htmlFor={id} onClick={this.handleLabelClick}>{this.props.children}</label>
+        //     </div>
+        // } else {
+        //     return null
+        // }
     }
 }
 export default TodoItem;

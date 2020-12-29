@@ -6,28 +6,34 @@ class TODO extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            todoList: {}
+            todoList: {},
+            selectedTodoList: {}
         };
         this.addTodoItem = this.addTodoItem.bind(this);
+        this.addSelectedItem = this.addSelectedItem.bind(this);
     }
 
     addTodoItem(e) {
         e.preventDefault();
         const todoList = this.state.todoList
         const itemValue = document.querySelector(".todo-input").value;
-        todoList[Object.keys(todoList).length + 1] = itemValue
+        const key = Object.keys(todoList).length + 1;
+        todoList[key] = <TodoItem className={key} key={key} id={key} onClick={this.addSelectedItem}>{itemValue}</TodoItem>;
         this.setState({
             todoList: todoList
-        })
+        });
+    }
+
+    addSelectedItem(e) {
+        const currentID = e.currentTarget;
+        console.log(currentID.id);
     }
 
 
-
     render() {
-        console.log(this.state.todoList);
-        let list = [];
+        const list = []
         for (const key in this.state.todoList) {
-            list.push(<TodoItem className={key} id={key}>{this.state.todoList[key]}</TodoItem>)
+            list.push(this.state.todoList[key])
         }
         return <div className="todo">
             <h1>TODO APP</h1>
