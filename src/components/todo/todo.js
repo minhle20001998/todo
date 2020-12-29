@@ -7,7 +7,7 @@ class TODO extends Component {
         super(props);
         this.state = {
             todoList: {},
-            selectedTodoList: {}
+            selectedTodoList: []
         };
         this.addTodoItem = this.addTodoItem.bind(this);
         this.addSelectedItem = this.addSelectedItem.bind(this);
@@ -25,8 +25,26 @@ class TODO extends Component {
     }
 
     addSelectedItem(e) {
-        const currentID = e.currentTarget;
-        console.log(currentID.id);
+        const currentID = e.currentTarget.id;
+        const { selectedTodoList } = this.state
+        const newList = [...selectedTodoList];
+
+        if (!selectedTodoList.includes(currentID)) {
+            newList.push(currentID);
+
+            this.setState({
+                selectedTodoList: newList
+            });
+        } else {
+            for (let i = 0; i < selectedTodoList.length; i++) {
+                if (selectedTodoList[i] == currentID) {
+                    newList.splice(i, 1);
+                }
+            }
+            this.setState({
+                selectedTodoList: newList
+            })
+        }
     }
 
 
